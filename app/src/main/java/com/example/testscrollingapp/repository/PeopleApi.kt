@@ -1,7 +1,6 @@
 package com.example.testscrollingapp.repository
 
 import com.example.testscrollingapp.repository.model.CelebDetails
-import com.example.testscrollingapp.repository.model.Celebrity
 import com.example.testscrollingapp.repository.model.PopularPeopleList
 import retrofit2.Response
 import retrofit2.http.GET
@@ -11,7 +10,7 @@ import retrofit2.http.Query
 interface PeopleApi {
 
     @GET(NetworkConstants.GET_POPULAR_PEOPLE)
-    suspend fun loadPopularCelebs(): Response<PopularPeopleList>
+    suspend fun loadPopularCelebs(@Query("page") page: Int): Response<PopularPeopleList>
 
     @GET(NetworkConstants.GET_POPULAR_PEOPLE_DETAIL)
     suspend fun loadCelebDetail(@Path("person_id") personID: String): Response<CelebDetails>

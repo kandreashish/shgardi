@@ -16,10 +16,12 @@ class CelebListScreenViewModel @Inject constructor(private val celebRepository: 
     private val _state = MutableStateFlow(CelebListScreenState())
     val state = _state as StateFlow<CelebListScreenState>
 
-    private fun loadCelebList() {
+    var page = 1
+
+    private fun loadCelebList(page: Int = 1) {
         _state.value = _state.value.copy(isLoading = true)
         viewModelScope.launch {
-            val response = celebRepository.loadPopularCelebs()
+            val response = celebRepository.loadPopularCelebs(page)
             if (response.isSuccessful) {
                 _state.value = _state.value.copy(
                     searchResults = response.body()?.people ?: emptyList(),
@@ -38,6 +40,9 @@ class CelebListScreenViewModel @Inject constructor(private val celebRepository: 
         when (action) {
             is CelebListAction.OnCelebClick -> {
 
+            }
+            is CelebListAction.LoadMore -> {
+                loadCelebList()
             }
             is CelebListAction.OnSearchQueryChange -> {
                 when (action.query) {
