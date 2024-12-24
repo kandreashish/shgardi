@@ -7,13 +7,10 @@ sealed class Routes {
     @Serializable
     data object HomeScreen : Routes()
 
-
-
     @Serializable
     data class AboutSection(
-        val name: String?,
+        val personId: Int,
     ) : Routes()
-
 
 
 }

@@ -77,6 +77,14 @@ dependencies {
     // Gson Converter (or you can choose another converter, such as Moshi)
     implementation (libs.converter.gson)
 
+    implementation(libs.stetho)
+    implementation(libs.stetho.okhttp3)
+    implementation(libs.accompanist.swiperefresh)
+
+    implementation(libs.androidx.material3)
+
+
+
     // OkHttp (optional, but highly recommended for network calls)
     implementation (libs.okhttp)
     implementation (libs.logging.interceptor)

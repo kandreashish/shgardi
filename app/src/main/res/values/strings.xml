@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">TestScrollingApp</string>
+    <string name="search_hint">Search here</string>
+    <string name="close_hint">Close</string>
+    <string name="no_search_results">No Search results</string>
 </resources>

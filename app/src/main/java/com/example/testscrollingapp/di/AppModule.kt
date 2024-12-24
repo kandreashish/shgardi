@@ -1,7 +1,9 @@
 package com.example.testscrollingapp.di
 
 import android.content.Context
-import com.example.testscrollingapp.repository.MovieApi
+import com.example.testscrollingapp.repository.PeopleApi
+import com.example.testscrollingapp.repository.helper.AuthInterceptor
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -9,7 +11,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -23,11 +24,11 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideOkhttpClient(
-        @ApplicationContext context: Context,
-    ): OkHttpClient {
+    fun provideOkhttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor())
+            .addNetworkInterceptor(AuthInterceptor())
+            .addNetworkInterceptor(StethoInterceptor())
+            .addNetworkInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build()
     }
 
@@ -36,13 +37,13 @@ object AppModule {
     fun providesProfileApi(
         okHttpClient: OkHttpClient,
         gson: Gson,
-    ): MovieApi {
+    ): PeopleApi {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create(gson))
-            .baseUrl("profileUrl")
+            .baseUrl("https://api.themoviedb.org/")
             .client(okHttpClient)
             .build()
-            .create(MovieApi::class.java)
+            .create(PeopleApi::class.java)
     }
 
 
