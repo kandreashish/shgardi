@@ -8,6 +8,10 @@ import javax.inject.Singleton
 class MovieRepository @Inject constructor(private val movieApi: MovieApi) {
 
     suspend fun loadMovies(): List<Movie> {
-        return movieApi.loadMovies()
+        return movieApi.loadPopularCelebs()
+    }
+
+    suspend fun loadDetailAboutMovie(movieId: String): Movie {
+        return movieApi.loadCelebDetail(movieId)
     }
 }

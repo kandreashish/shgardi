@@ -35,7 +35,6 @@ class MainActivity : ComponentActivity() {
             TestScrollingAppTheme {
                 var startDestination by remember { mutableStateOf<Routes>(Routes.HomeScreen) }
                 val navController = rememberNavController()
-                val scope = rememberCoroutineScope()
 
                 NavHost(
                     navController = navController,
